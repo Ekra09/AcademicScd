@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2>Student Dashboard</h2>
+
+<!-- Add Student Form -->
+<form method="POST" action="{{ url_for('student.add_student') }}" class="mb-4">
+    <div class="row">
+        <div class="col">
+            <input type="text" name="name" class="form-control" placeholder="Name" required>
+        </div>
+        <div class="col">
+            <input type="email" name="email" class="form-control" placeholder="Email" required>
+        </div>
+        <div class="col">
+            <input type="number" name="age" class="form-control" placeholder="Age" required>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Add Student</button>
+        </div>
+    </div>
+</form>
+
+<!-- Student Table -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for student in students %}
+        <tr>
+            <form method="POST" action="{{ url_for('student.update_student', id=student.id) }}">
+                <td><input type="text" name="name" value="{{ student.name }}" class="form-control" required></td>
+                <td><input type="email" name="email" value="{{ student.email }}" class="form-control" required></td>
+                <td><input type="number" name="age" value="{{ student.age }}" class="form-control" required></td>
+                <td>
+                    <button type="submit" class="btn btn-success btn-sm">Update</button>
+                    <a href="{{ url_for('student.delete_student', id=student.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+            </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
