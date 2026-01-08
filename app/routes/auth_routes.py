@@ -1,11 +1,9 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, logout_user, login_required
 from ..models import User
-from .. import db, login_manager
-from flask_bcrypt import Bcrypt
+from .. import db, login_manager, bcrypt
 
 auth_bp = Blueprint('auth', __name__)
-bcrypt = Bcrypt()
 
 @login_manager.user_loader
 def load_user(user_id):
