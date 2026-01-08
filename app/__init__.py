@@ -2,12 +2,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from config import Config  # Import the Config class directly
+import os
 
 db = SQLAlchemy()
 login_manager = LoginManager()
 
 def create_app():
-    app = Flask(__name__)
+    instance_path = os.environ.get("FLASK_INSTANCE_PATH", os.path.join(os.sep, "tmp", "instance"))
+    app = Flask(__name__, instance_path=instance_path)
     app.config.from_object(Config)  # Load configuration from Config class
 
     db.init_app(app)
